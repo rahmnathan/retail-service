@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:jessie
+  retail-service:
+    image: 192.168.1.8:5000/retail-service
+    ports:
+     - "8080:8080"

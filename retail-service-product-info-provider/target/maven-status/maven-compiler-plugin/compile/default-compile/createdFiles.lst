@@ -1,0 +1,4 @@
+com/github/rahmnathan/retail/product/info/data/Price.class
+com/github/rahmnathan/retail/product/info/boundary/ProductInfoFacade.class
+com/github/rahmnathan/retail/product/info/data/ProductInfo.class
+com/github/rahmnathan/retail/product/info/control/ProductInfoProvider.class

@@ -1,0 +1,3 @@
+com/github/rahmnathan/retail/price/data/boundary/ProductPriceProvider.class
+com/github/rahmnathan/retail/price/data/persistence/ProductPriceRepository.class
+com/github/rahmnathan/retail/price/data/data/ProductPrice.class
