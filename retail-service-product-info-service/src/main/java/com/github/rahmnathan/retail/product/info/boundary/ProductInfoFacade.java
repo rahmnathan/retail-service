@@ -33,12 +33,7 @@ public class ProductInfoFacade {
     private ProductInfo getProductInfoFromProvider(Long id){
         logger.info("Cache miss for id: " + id);
 
-        Optional<ProductInfo> productInfoOptional = productInfoService.getProductInfo(id);
-        if(productInfoOptional.isPresent()) {
-            return productInfoOptional.get();
-        }
-
-        return null;
+        return productInfoService.getProductInfo(id);
     }
 
     public void upsertProductPrice(ProductPrice productPrice){

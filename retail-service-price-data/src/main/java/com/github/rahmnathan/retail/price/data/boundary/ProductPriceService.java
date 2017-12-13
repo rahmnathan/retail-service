@@ -28,7 +28,7 @@ public class ProductPriceService {
 
     private void validateParams(ProductPrice productPrice) {
         if(productPrice == null || productPrice.getId() == null ||
-                productPrice.getPrice() == null || productPrice.getCurrency() == null) {
+                productPrice.getPrice() == null || productPrice.getCurrencyCode() == null) {
 
             throw new IllegalArgumentException("Invalid ProductPrice: " + productPrice);
         }

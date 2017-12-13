@@ -3,12 +3,14 @@ package com.github.rahmnathan.retail.redsky.data.config;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Component
 public class RedSkyProductCamelConfig {
 
     @Value(value = "${product.info.host}")

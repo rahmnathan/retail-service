@@ -25,7 +25,7 @@ public class ProductInfoWeb {
         return productInfoFacade.getProductInfo(productId);
     }
 
-    @RequestMapping(value = "/products", produces = "application/json", method = RequestMethod.PUT)
+    @RequestMapping(value = "/products", consumes = "application/json", method = RequestMethod.PUT)
     public void putProductInfo(@RequestBody ProductPrice productPrice){
         logger.info("Received request to store ProductInfo: " + productPrice);
         productInfoFacade.upsertProductPrice(productPrice);

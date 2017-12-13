@@ -12,9 +12,11 @@ import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public class RedSkyProductService {
+    private final Logger logger = Logger.getLogger(RedSkyProductService.class.getName());
     private final String params = "excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_" +
             "review_statistics,question_answer_statistics";
     private final String basePath = "/v2/pdp/tcin/";
@@ -27,25 +29,28 @@ public class RedSkyProductService {
 
     public Optional<RedSkyProduct> getRedSkyProduct(Long id){
         Map<String, Object> headers = buildHeaders(id);
+        logger.info("Requesting RedSkyProduct: " + id + " with the following headers: " + headers.toString());
 
         Message responseMessage = producerTemplate.request("direct:productinfo",
                 exchange -> exchange.getIn().setHeaders(headers))
                 .getOut();
 
         Integer responseCode = responseMessage.getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
-        String responseText = responseMessage.getHeader(Exchange.HTTP_RESPONSE_TEXT, String.class);
+        String responseBody = responseMessage.getBody(String.class);
 
-        return processResponse(responseCode, responseText);
+        logger.info("Response for: " + id + " Code: " + responseCode + " Message: " + responseBody);
+
+        return processResponse(responseCode, responseBody);
     }
 
-    private Optional<RedSkyProduct> processResponse(Integer responseCode, String responseText){
-        if(responseCode == null || responseText == null || responseCode == 404){
+    private Optional<RedSkyProduct> processResponse(Integer responseCode, String responseBody){
+        if(responseCode == null || responseBody == null || responseCode == 404){
             return Optional.empty();
         } else if (responseCode != 200){
-            throw new RuntimeException("Failure calling RedSky. Response Code: " + responseCode + " Response Message: " + responseText);
+            throw new RuntimeException("Failure calling RedSky. Response Code: " + responseCode + " Response Message: " + responseBody);
         }
 
-        return Optional.of(RedSkyProductMapper.buildRedSkyProduct(responseText));
+        return Optional.of(RedSkyProductMapper.buildRedSkyProduct(responseBody));
     }
 
     private Map<String, Object> buildHeaders(Long id){

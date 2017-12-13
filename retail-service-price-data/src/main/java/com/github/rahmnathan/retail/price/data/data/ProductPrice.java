@@ -9,14 +9,14 @@ public class ProductPrice {
     @Id
     private Long id;
     private Double price;
-    private Currency currency;
-
-    public ProductPrice(Long id) {
-        this.id = id;
-    }
+    private String currencyCode;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getPrice() {
@@ -27,12 +27,12 @@ public class ProductPrice {
         this.price = price;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ProductPrice {
         return "ProductPrice{" +
                 "id=" + id +
                 ", price=" + price +
-                ", currency=" + currency +
+                ", currencyCode='" + currencyCode + '\'' +
                 '}';
     }
 }

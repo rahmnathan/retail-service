@@ -22,28 +22,21 @@ public class ProductInfoService {
         this.productPriceService = productPriceService;
     }
 
-    public Optional<ProductInfo> getProductInfo(Long id) {
+    public ProductInfo getProductInfo(Long id) {
         if (id == null)
             throw new IllegalArgumentException("ProductInfo Id cannot be null");
 
-        Optional<ProductPrice> productPrice = productPriceService.getProductPrice(id);
-        Optional<RedSkyProduct> productInfo = redSkyProductService.getRedSkyProduct(id);
+        Optional<ProductPrice> productPriceOptional = productPriceService.getProductPrice(id);
+        Optional<RedSkyProduct> redSkyProduct = redSkyProductService.getRedSkyProduct(id);
 
-        return buildProductInfo(productPrice, productInfo, id);
+        Price price = productPriceOptional.map(productPrice ->
+                new Price(productPrice.getPrice(), productPrice.getCurrencyCode()))
+                .orElse(new Price(null, null));
+
+        return new ProductInfo(id, redSkyProduct.map(RedSkyProduct::getName).orElse(null), price);
     }
 
     public void upsertProductPrice(ProductPrice productPrice){
         productPriceService.upsertProductPrice(productPrice);
-    }
-
-    private Optional<ProductInfo> buildProductInfo(Optional<ProductPrice> productPrice, Optional<RedSkyProduct> redSkyProduct, Long id){
-        if(productPrice.isPresent() && redSkyProduct.isPresent()){
-            ProductPrice productPrice1 = productPrice.get();
-            Price price = new Price(productPrice1.getPrice(), productPrice1.getCurrency().getCurrencyCode());
-            return Optional.of(new ProductInfo(id, redSkyProduct.get().getName(), price));
-        }
-
-
-        return Optional.empty();
     }
 }
