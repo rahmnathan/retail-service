@@ -2,7 +2,8 @@ package com.github.rahmnathan.retail.product.info.boundary;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import com.github.rahmnathan.retail.product.info.control.ProductInfoProvider;
+import com.github.rahmnathan.retail.price.data.data.ProductPrice;
+import com.github.rahmnathan.retail.product.info.control.ProductInfoService;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
 import org.springframework.stereotype.Component;
 
@@ -14,25 +15,33 @@ import java.util.logging.Logger;
 @Component
 public class ProductInfoFacade {
     private final Logger logger = Logger.getLogger(ProductInfo.class.getName());
-    private final ProductInfoProvider productInfoProvider;
+    private final ProductInfoService productInfoService;
     private final LoadingCache<Long, ProductInfo> productInfoCache = Caffeine.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(1, TimeUnit.MINUTES)
-            .build(this::getProductInfo);
+            .build(this::getProductInfoFromProvider);
 
     @Inject
-    public ProductInfoFacade(ProductInfoProvider productInfoProvider) {
-        this.productInfoProvider = productInfoProvider;
+    public ProductInfoFacade(ProductInfoService productInfoService) {
+        this.productInfoService = productInfoService;
     }
 
-    public ProductInfo getProductInfo(Long Id){
-        logger.info("Cache miss for id: " + Id);
+    public ProductInfo getProductInfo(Long id){
+        return productInfoCache.get(id);
+    }
 
-        Optional<ProductInfo> productInfoOptional = productInfoProvider.getProductInfo(Id);
+    private ProductInfo getProductInfoFromProvider(Long id){
+        logger.info("Cache miss for id: " + id);
+
+        Optional<ProductInfo> productInfoOptional = productInfoService.getProductInfo(id);
         if(productInfoOptional.isPresent()) {
             return productInfoOptional.get();
         }
 
         return null;
+    }
+
+    public void upsertProductPrice(ProductPrice productPrice){
+        productInfoService.upsertProductPrice(productPrice);
     }
 }

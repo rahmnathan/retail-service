@@ -1,36 +1,39 @@
 package com.github.rahmnathan.retail.product.info.control;
 
-import com.github.rahmnathan.retail.price.data.boundary.ProductPriceProvider;
+import com.github.rahmnathan.retail.price.data.boundary.ProductPriceService;
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.product.info.data.Price;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
-import com.github.rahmnathan.retail.redsky.data.boundary.RedSkyProductProvider;
+import com.github.rahmnathan.retail.redsky.data.boundary.RedSkyProductService;
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.util.Optional;
 
 @Component
-public class ProductInfoProvider {
-    private final RedSkyProductProvider redSkyProductProvider;
-    private final ProductPriceProvider productPriceProvider;
+public class ProductInfoService {
+    private final RedSkyProductService redSkyProductService;
+    private final ProductPriceService productPriceService;
 
     @Inject
-    public ProductInfoProvider(RedSkyProductProvider redSkyProductProvider, ProductPriceProvider productPriceProvider) {
-        this.redSkyProductProvider = redSkyProductProvider;
-        this.productPriceProvider = productPriceProvider;
+    public ProductInfoService(RedSkyProductService redSkyProductService, ProductPriceService productPriceService) {
+        this.redSkyProductService = redSkyProductService;
+        this.productPriceService = productPriceService;
     }
 
     public Optional<ProductInfo> getProductInfo(Long id) {
         if (id == null)
             throw new IllegalArgumentException("ProductInfo Id cannot be null");
 
-        Optional<ProductPrice> productPrice = productPriceProvider.getProductPrice(id);
-        Optional<RedSkyProduct> productInfo = redSkyProductProvider.getRedSkyProduct(id);
+        Optional<ProductPrice> productPrice = productPriceService.getProductPrice(id);
+        Optional<RedSkyProduct> productInfo = redSkyProductService.getRedSkyProduct(id);
 
         return buildProductInfo(productPrice, productInfo, id);
+    }
+
+    public void upsertProductPrice(ProductPrice productPrice){
+        productPriceService.upsertProductPrice(productPrice);
     }
 
     private Optional<ProductInfo> buildProductInfo(Optional<ProductPrice> productPrice, Optional<RedSkyProduct> redSkyProduct, Long id){

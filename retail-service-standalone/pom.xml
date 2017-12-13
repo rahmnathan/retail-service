@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.rahmnathan</groupId>
-            <artifactId>retail-service-product-info-provider</artifactId>
+            <artifactId>retail-service-product-info-service</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

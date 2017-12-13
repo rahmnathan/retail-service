@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class RedSkyProductProvider {
+public class RedSkyProductService {
     private final String params = "excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_" +
             "review_statistics,question_answer_statistics";
     private final String basePath = "/v2/pdp/tcin/";
     private final ProducerTemplate producerTemplate;
 
     @Inject
-    public RedSkyProductProvider(ProducerTemplate producerTemplate){
+    public RedSkyProductService(ProducerTemplate producerTemplate){
         this.producerTemplate = producerTemplate;
     }
 

@@ -14,7 +14,7 @@
         <module>retail-service-web</module>
         <module>retail-service-price-data</module>
         <module>retail-service-redsky-data</module>
-        <module>retail-service-product-info-provider</module>
+        <module>retail-service-product-info-service</module>
     </modules>
 
     <parent>

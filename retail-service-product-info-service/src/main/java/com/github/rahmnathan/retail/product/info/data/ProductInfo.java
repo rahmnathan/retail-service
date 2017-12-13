@@ -37,4 +37,13 @@ public class ProductInfo {
         this.currentPrice = currentPrice;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", currentPrice=" + currentPrice +
+                '}';
+    }
 }

@@ -1,22 +1,20 @@
 package com.github.rahmnathan.retail.product.info.web;
 
+import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.product.info.boundary.ProductInfoFacade;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
 @RestController
-public class ProductInfoService {
-    private final Logger logger = Logger.getLogger(ProductInfoService.class.getName());
+public class ProductInfoWeb {
+    private final Logger logger = Logger.getLogger(ProductInfoWeb.class.getName());
     private final ProductInfoFacade productInfoFacade;
 
     @Inject
-    public ProductInfoService(ProductInfoFacade productInfoFacade) {
+    public ProductInfoWeb(ProductInfoFacade productInfoFacade) {
         this.productInfoFacade = productInfoFacade;
     }
 
@@ -27,5 +25,9 @@ public class ProductInfoService {
         return productInfoFacade.getProductInfo(productId);
     }
 
-
+    @RequestMapping(value = "/products", produces = "application/json", method = RequestMethod.PUT)
+    public void putProductInfo(@RequestBody ProductPrice productPrice){
+        logger.info("Received request to store ProductInfo: " + productPrice);
+        productInfoFacade.upsertProductPrice(productPrice);
+    }
 }

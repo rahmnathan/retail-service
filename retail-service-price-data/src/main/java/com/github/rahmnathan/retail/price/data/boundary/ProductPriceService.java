@@ -8,11 +8,11 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 @Component
-public class ProductPriceProvider {
+public class ProductPriceService {
     private final ProductPriceRepository productPriceRepository;
 
     @Inject
-    public ProductPriceProvider(ProductPriceRepository productPriceRepository) {
+    public ProductPriceService(ProductPriceRepository productPriceRepository) {
         this.productPriceRepository = productPriceRepository;
     }
 
@@ -29,6 +29,7 @@ public class ProductPriceProvider {
     private void validateParams(ProductPrice productPrice) {
         if(productPrice == null || productPrice.getId() == null ||
                 productPrice.getPrice() == null || productPrice.getCurrency() == null) {
+
             throw new IllegalArgumentException("Invalid ProductPrice: " + productPrice);
         }
     }
