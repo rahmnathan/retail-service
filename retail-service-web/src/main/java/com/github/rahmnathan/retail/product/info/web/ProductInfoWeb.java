@@ -35,7 +35,7 @@ public class ProductInfoWeb {
             if(!productInfo.isPresent())
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ProductInfo not found for id: " + productId);
 
-            return ResponseEntity.status(200).body(productInfo);
+            return ResponseEntity.status(200).body(productInfo.get());
         } catch (ProductInfoServiceException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
