@@ -1,5 +1,6 @@
 package com.github.rahmnathan.retail.redsky.data.boundary;
 
+import com.github.rahmnathan.retail.redsky.data.api.IRedSkyProductService;
 import com.github.rahmnathan.retail.redsky.data.control.RedSkyProductMapper;
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
 import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Component
-public class RedSkyProductService {
+public class RedSkyProductService implements IRedSkyProductService {
     private final Logger logger = Logger.getLogger(RedSkyProductService.class.getName());
     private final String params = "excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_" +
             "review_statistics,question_answer_statistics";

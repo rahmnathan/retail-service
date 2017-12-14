@@ -1,21 +1,19 @@
-package com.github.rahmnathan.retail.price.data.data;
+package com.github.rahmnathan.retail.price.data.persistence;
 
+import com.github.rahmnathan.retail.price.data.data.CurrencyCode;
 import org.springframework.data.annotation.Id;
 
-public class ProductPrice {
+public class ProductPriceEntity {
 
     @Id
     private Long id;
     private Double price;
-    private String currencyCode;
+    private CurrencyCode currencyCode;
 
-    public ProductPrice(Long id, Double price, String currencyCode) {
+    public ProductPriceEntity(Long id, Double price, CurrencyCode currencyCode) {
         this.id = id;
         this.price = price;
         this.currencyCode = currencyCode;
-    }
-
-    public ProductPrice() {
     }
 
     public Long getId() {
@@ -26,7 +24,7 @@ public class ProductPrice {
         return price;
     }
 
-    public String getCurrencyCode() {
+    public CurrencyCode getCurrencyCode() {
         return currencyCode;
     }
 

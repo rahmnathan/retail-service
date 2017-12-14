@@ -1,12 +1,12 @@
 package com.github.rahmnathan.retail.product.info.control;
 
-import com.github.rahmnathan.retail.price.data.boundary.ProductPriceService;
+import com.github.rahmnathan.retail.price.data.api.IProductPriceService;
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.product.info.data.Price;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
 import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceException;
 import com.github.rahmnathan.retail.product.info.exception.ProductInfoServiceException;
-import com.github.rahmnathan.retail.redsky.data.boundary.RedSkyProductService;
+import com.github.rahmnathan.retail.redsky.data.api.IRedSkyProductService;
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
 import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Component
 public class ProductInfoService {
-    private final RedSkyProductService redSkyProductService;
-    private final ProductPriceService productPriceService;
+    private final IRedSkyProductService redSkyProductService;
+    private final IProductPriceService productPriceService;
 
     @Inject
-    public ProductInfoService(RedSkyProductService redSkyProductService, ProductPriceService productPriceService) {
+    public ProductInfoService(IRedSkyProductService redSkyProductService, IProductPriceService productPriceService) {
         this.redSkyProductService = redSkyProductService;
         this.productPriceService = productPriceService;
     }

@@ -1,10 +1,12 @@
 package com.github.rahmnathan.retail.product.info.data;
 
+import com.github.rahmnathan.retail.price.data.data.CurrencyCode;
+
 public class Price {
     private final Double amount;
-    private final String currency;
+    private final CurrencyCode currency;
 
-    public Price(Double amount, String currency) {
+    public Price(Double amount, CurrencyCode currency) {
         this.amount = amount;
         this.currency = currency;
     }
@@ -13,7 +15,7 @@ public class Price {
         return amount;
     }
 
-    public String getCurrency() {
+    public CurrencyCode getCurrency() {
         return currency;
     }
 }

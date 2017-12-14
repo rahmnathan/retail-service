@@ -14,15 +14,20 @@
     <dependencies>
         <dependency>
             <groupId>com.github.rahmnathan</groupId>
-            <artifactId>retail-service-price-data</artifactId>
+            <artifactId>retail-service-price-data-api</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.rahmnathan</groupId>
-            <artifactId>retail-service-redsky-data</artifactId>
+            <artifactId>retail-service-redsky-data-api</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.13.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

@@ -61,7 +61,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>192.168.1.8:5000/retail-service</repository>
+                    <repository>rahmnathan/retail-service</repository>
                     <tag>latest</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

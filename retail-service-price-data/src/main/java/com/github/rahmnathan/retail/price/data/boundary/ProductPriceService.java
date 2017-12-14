@@ -1,7 +1,9 @@
 package com.github.rahmnathan.retail.price.data.boundary;
 
+import com.github.rahmnathan.retail.price.data.api.IProductPriceService;
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceException;
+import com.github.rahmnathan.retail.price.data.persistence.ProductPriceEntity;
 import com.github.rahmnathan.retail.price.data.persistence.ProductPriceRepository;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +12,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Component
-public class ProductPriceService {
+public class ProductPriceService implements IProductPriceService {
     private final Logger logger = Logger.getLogger(ProductPriceService.class.getName());
     private final ProductPriceRepository productPriceRepository;
 
@@ -28,14 +30,14 @@ public class ProductPriceService {
         }
 
         logger.info("Inserting ProductPrice: " + productPrice.toString());
-        productPriceRepository.insert(productPrice);
+        productPriceRepository.insert(domainObjectToEntity(productPrice));
     }
 
     public Optional<ProductPrice> getProductPrice(Long id) {
-        ProductPrice productPrice = productPriceRepository.findOne(id);
-
+        ProductPriceEntity productPrice = productPriceRepository.findOne(id);
         logger.info("Query for ProductPrice: " + id + " returned: " + productPrice);
-        return Optional.ofNullable(productPrice);
+
+        return productPrice != null ? Optional.of(entityToDomainObject(productPrice)) : Optional.empty();
     }
 
     private void validateParams(ProductPrice productPrice) throws InvalidProductPriceException {
@@ -44,5 +46,13 @@ public class ProductPriceService {
 
             throw new InvalidProductPriceException("Invalid ProductPrice: " + productPrice);
         }
+    }
+
+    ProductPrice entityToDomainObject(ProductPriceEntity productPriceEntity){
+        return new ProductPrice(productPriceEntity.getId(), productPriceEntity.getPrice(), productPriceEntity.getCurrencyCode());
+    }
+
+    ProductPriceEntity domainObjectToEntity(ProductPrice productPrice){
+        return new ProductPriceEntity(productPrice.getId(), productPrice.getPrice(), productPrice.getCurrencyCode());
     }
 }

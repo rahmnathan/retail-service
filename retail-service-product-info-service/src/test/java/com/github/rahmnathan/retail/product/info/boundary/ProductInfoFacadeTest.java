@@ -1,10 +1,11 @@
 package com.github.rahmnathan.retail.product.info.boundary;
 
-import com.github.rahmnathan.retail.price.data.boundary.ProductPriceService;
+import com.github.rahmnathan.retail.price.data.api.IProductPriceService;
+import com.github.rahmnathan.retail.price.data.data.CurrencyCode;
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.product.info.control.ProductInfoService;
 import com.github.rahmnathan.retail.product.info.exception.ProductInfoServiceException;
-import com.github.rahmnathan.retail.redsky.data.boundary.RedSkyProductService;
+import com.github.rahmnathan.retail.redsky.data.api.IRedSkyProductService;
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
 import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.junit.Assert;
@@ -17,8 +18,8 @@ import static org.mockito.Mockito.when;
 
 public class ProductInfoFacadeTest {
     private static final Long productInfoId = 1L;
-    private static final RedSkyProductService mockRedSkyProductService = mock(RedSkyProductService.class);
-    private static final ProductPriceService mockProductPriceService = mock(ProductPriceService.class);
+    private static final IRedSkyProductService mockRedSkyProductService = mock(IRedSkyProductService.class);
+    private static final IProductPriceService mockProductPriceService = mock(IProductPriceService.class);
 
     @Test(expected = ProductInfoServiceException.class)
     public void getProductInfoRedSkyExceptionTest() throws Exception {
@@ -54,7 +55,7 @@ public class ProductInfoFacadeTest {
 
     @Test
     public void getProductInfoTest() throws Exception {
-        Optional<ProductPrice> productPrice = Optional.of(new ProductPrice(productInfoId, 2.5, "USD"));
+        Optional<ProductPrice> productPrice = Optional.of(new ProductPrice(productInfoId, 2.5, CurrencyCode.USD));
         when(mockProductPriceService.getProductPrice(productInfoId)).thenReturn(productPrice);
 
         Optional<RedSkyProduct> redSkyProduct = Optional.of(new RedSkyProduct("TestName"));
