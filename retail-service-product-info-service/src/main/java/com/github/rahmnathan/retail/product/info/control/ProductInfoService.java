@@ -25,23 +25,29 @@ public class ProductInfoService {
         this.productPriceService = productPriceService;
     }
 
-    public ProductInfo getProductInfo(Long id) throws RedSkyServiceException, ProductInfoServiceException {
+    public Optional<ProductInfo> getProductInfo(Long id) throws ProductInfoServiceException {
         if (id == null)
             throw new IllegalArgumentException("ProductInfo Id cannot be null");
 
         Optional<ProductPrice> productPriceOptional = productPriceService.getProductPrice(id);
         if(!productPriceOptional.isPresent()){
-            throw new ProductInfoServiceException("Failed to find ProductPrice for id: " + id);
+            return Optional.empty();
         }
 
-        Optional<RedSkyProduct> redSkyProduct = redSkyProductService.getRedSkyProduct(id);
+        Optional<RedSkyProduct> redSkyProduct;
+        try {
+            redSkyProduct = redSkyProductService.getRedSkyProduct(id);
+        } catch (RedSkyServiceException e){
+            throw new ProductInfoServiceException("Failed to get red sky product", e);
+        }
+
         if(!redSkyProduct.isPresent()){
-            throw new ProductInfoServiceException("Failed to find RedSkyProduct for id: " + id);
+            return Optional.empty();
         }
 
         ProductPrice productPrice = productPriceOptional.get();
         Price price = new Price(productPrice.getPrice(), productPrice.getCurrencyCode());
-        return new ProductInfo(id, redSkyProduct.get().getName(), price);
+        return Optional.of(new ProductInfo(id, redSkyProduct.get().getName(), price));
     }
 
     public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {

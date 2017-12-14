@@ -7,12 +7,13 @@ import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceExce
 import com.github.rahmnathan.retail.product.info.control.ProductInfoService;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
 import com.github.rahmnathan.retail.product.info.exception.ProductInfoServiceException;
-import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.util.Optional;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
@@ -29,13 +30,19 @@ public class ProductInfoFacade {
         this.productInfoService = productInfoService;
     }
 
-    public ProductInfo getProductInfo(Long id){
-        return productInfoCache.get(id);
+    public Optional<ProductInfo> getProductInfo(Long id) throws ProductInfoServiceException {
+        try {
+            return Optional.ofNullable(productInfoCache.get(id));
+        } catch (CompletionException e) {
+            logger.log(Level.INFO, "Error loading ProductInfo from cache", e);
+
+            throw new ProductInfoServiceException("Error loading ProductInfo from cache", e.getCause());
+        }
     }
 
-    private ProductInfo getProductInfoFromProvider(Long id) throws RedSkyServiceException, ProductInfoServiceException {
+    private ProductInfo getProductInfoFromProvider(Long id) throws ProductInfoServiceException {
         logger.info("Cache miss for id: " + id);
-        return productInfoService.getProductInfo(id);
+        return productInfoService.getProductInfo(id).orElse(null);
     }
 
     public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {

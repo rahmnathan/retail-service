@@ -4,11 +4,13 @@ import com.github.rahmnathan.retail.price.data.data.ProductPrice;
 import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceException;
 import com.github.rahmnathan.retail.product.info.boundary.ProductInfoFacade;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
+import com.github.rahmnathan.retail.product.info.exception.ProductInfoServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +25,20 @@ public class ProductInfoWeb {
     }
 
     @RequestMapping(value = "/products/{productId}", produces = "application/json", method = RequestMethod.GET)
-    public ProductInfo getProductInfo(@PathVariable Long productId){
+    public ResponseEntity getProductInfo(@PathVariable Long productId){
         logger.info("Received request for ProductInfo. Id: " + productId);
+        if(productId == null)
+            return ResponseEntity.badRequest().body("Product ID cannot be null");
 
-        return productInfoFacade.getProductInfo(productId);
+        try {
+            Optional<ProductInfo> productInfo =  productInfoFacade.getProductInfo(productId);
+            if(!productInfo.isPresent())
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ProductInfo not found for id: " + productId);
+
+            return ResponseEntity.status(200).body(productInfo);
+        } catch (ProductInfoServiceException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
     }
 
     @RequestMapping(value = "/products", consumes = "application/json", method = RequestMethod.PUT)

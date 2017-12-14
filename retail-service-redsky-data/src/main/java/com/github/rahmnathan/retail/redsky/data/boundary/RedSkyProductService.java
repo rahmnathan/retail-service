@@ -9,7 +9,6 @@ import org.apache.camel.ProducerTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
