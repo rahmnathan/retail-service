@@ -11,28 +11,22 @@ public class ProductPrice {
     private Double price;
     private String currencyCode;
 
-    public Long getId() {
-        return id;
+    public ProductPrice(Long id, Double price, String currencyCode) {
+        this.id = id;
+        this.price = price;
+        this.currencyCode = currencyCode;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public String getCurrencyCode() {
         return currencyCode;
-    }
-
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
     }
 
     @Override

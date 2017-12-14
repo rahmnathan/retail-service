@@ -21,8 +21,7 @@ public class ProductPriceServiceTest {
 
     @BeforeClass
     public static void initialize(){
-        invalidProductPrice = new ProductPrice();
-        invalidProductPrice.setId(invalidProductPriceId);
+        invalidProductPrice = new ProductPrice(invalidProductPriceId, 2.5, "USD");
 
         ProductPriceRepository priceRepository = mock(ProductPriceRepository.class);
         when(priceRepository.findOne(invalidProductPriceId)).thenReturn(invalidProductPrice);
@@ -30,10 +29,7 @@ public class ProductPriceServiceTest {
 
         priceService = new ProductPriceService(priceRepository);
 
-        validProductPrice = new ProductPrice();
-        validProductPrice.setId(validProductPriceId);
-        validProductPrice.setCurrencyCode("USD");
-        validProductPrice.setPrice(2.5);
+        validProductPrice = new ProductPrice(validProductPriceId, 2.5, "USD");
     }
 
     @Test

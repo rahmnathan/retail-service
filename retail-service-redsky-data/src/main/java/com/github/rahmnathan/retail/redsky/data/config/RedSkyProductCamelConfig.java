@@ -32,7 +32,10 @@ public class RedSkyProductCamelConfig {
                     onException(Exception.class)
                             .useExponentialBackOff()
                             .redeliveryDelay(500)
-                            .maximumRedeliveries(2);
+                            .maximumRedeliveries(2)
+                            .hystrix()
+                            .loadBalance()
+                            .circuitBreaker(2, 1000, Exception.class);
 
                     from("direct:productinfo")
                             .to("http4://" + productInfoHost);
