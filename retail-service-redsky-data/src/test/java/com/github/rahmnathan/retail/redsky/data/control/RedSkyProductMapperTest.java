@@ -1,5 +1,6 @@
 package com.github.rahmnathan.retail.redsky.data.control;
 
+import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,12 +14,12 @@ public class RedSkyProductMapperTest {
     }
 
     @Test(expected = JSONException.class)
-    public void testInvalidJSONMapping(){
+    public void testInvalidJSONMapping() throws RedSkyServiceException {
         RedSkyProductMapper.buildRedSkyProduct("{{}");
     }
 
     @Test(expected = RuntimeException.class)
-    public void testValidJSONMissingRequiredFieldMapping(){
+    public void testValidJSONMissingRequiredFieldMapping() throws RedSkyServiceException {
         RedSkyProductMapper.buildRedSkyProduct("{\"test\": null");
     }
 }

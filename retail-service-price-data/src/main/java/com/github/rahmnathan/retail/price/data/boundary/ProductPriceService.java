@@ -1,6 +1,7 @@
 package com.github.rahmnathan.retail.price.data.boundary;
 
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
+import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceException;
 import com.github.rahmnathan.retail.price.data.persistence.ProductPriceRepository;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class ProductPriceService {
         this.productPriceRepository = productPriceRepository;
     }
 
-    public void upsertProductPrice(ProductPrice productPrice){
+    public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
         validateParams(productPrice);
 
         if(getProductPrice(productPrice.getId()).isPresent()){
@@ -30,18 +31,18 @@ public class ProductPriceService {
         productPriceRepository.insert(productPrice);
     }
 
-    public Optional<ProductPrice> getProductPrice(Long id){
+    public Optional<ProductPrice> getProductPrice(Long id) {
         ProductPrice productPrice = productPriceRepository.findOne(id);
 
         logger.info("Query for ProductPrice: " + id + " returned: " + productPrice);
         return Optional.ofNullable(productPrice);
     }
 
-    private void validateParams(ProductPrice productPrice) {
+    private void validateParams(ProductPrice productPrice) throws InvalidProductPriceException {
         if(productPrice == null || productPrice.getId() == null ||
                 productPrice.getPrice() == null || productPrice.getCurrencyCode() == null) {
 
-            throw new IllegalArgumentException("Invalid ProductPrice: " + productPrice);
+            throw new InvalidProductPriceException("Invalid ProductPrice: " + productPrice);
         }
     }
 }

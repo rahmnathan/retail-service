@@ -1,13 +1,14 @@
 package com.github.rahmnathan.retail.redsky.data.control;
 
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
+import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.json.JSONObject;
 
 import java.util.Optional;
 
 public class RedSkyProductMapper {
 
-    public static RedSkyProduct buildRedSkyProduct(String jsonString){
+    public static RedSkyProduct buildRedSkyProduct(String jsonString) throws RedSkyServiceException {
         JSONObject fullObject = new JSONObject(jsonString);
         if(fullObject.has("product")){
             JSONObject product = fullObject.getJSONObject("product");
@@ -15,16 +16,15 @@ public class RedSkyProductMapper {
                 JSONObject item = product.getJSONObject("item");
                 if(item.has("product_description")){
                     JSONObject productDescription = item.getJSONObject("product_description");
+
                     if(productDescription.has("title")){
                         String title = productDescription.getString("title");
-                        return RedSkyProduct.Builder.newInstance()
-                                .setName(title)
-                                .build();
+                        return new RedSkyProduct(title);
                     }
                 }
             }
         }
 
-        throw new RuntimeException("Failure mapping json response to RedSkyProduct");
+        throw new RedSkyServiceException("Failure mapping response to RedSkyProduct");
     }
 }

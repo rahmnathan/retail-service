@@ -15,27 +15,12 @@ public class ProductInfo {
         return id;
     }
 
-    public ProductInfo setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
 
-    public ProductInfo setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public Price getCurrentPrice() {
         return currentPrice;
-    }
-
-    public ProductInfo setCurrentPrice(Price currentPrice) {
-        this.currentPrice = currentPrice;
-        return this;
     }
 
     @Override

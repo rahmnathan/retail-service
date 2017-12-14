@@ -2,6 +2,7 @@ package com.github.rahmnathan.retail.redsky.data.boundary;
 
 import com.github.rahmnathan.retail.redsky.data.control.RedSkyProductMapper;
 import com.github.rahmnathan.retail.redsky.data.data.RedSkyProduct;
+import com.github.rahmnathan.retail.redsky.data.exception.RedSkyServiceException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.ProducerTemplate;
@@ -27,8 +28,11 @@ public class RedSkyProductService {
         this.producerTemplate = producerTemplate;
     }
 
-    public Optional<RedSkyProduct> getRedSkyProduct(Long id){
-        Map<String, Object> headers = buildHeaders(id);
+    public Optional<RedSkyProduct> getRedSkyProduct(Long id) throws RedSkyServiceException {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put(Exchange.HTTP_PATH, basePath + id);
+        headers.put(Exchange.HTTP_QUERY, params);
+
         logger.info("Requesting RedSkyProduct: " + id + " with the following headers: " + headers.toString());
 
         Message responseMessage = producerTemplate.request("direct:productinfo",
@@ -40,25 +44,12 @@ public class RedSkyProductService {
 
         logger.info("Response for: " + id + " Code: " + responseCode + " Message: " + responseBody);
 
-        return processResponse(responseCode, responseBody);
-    }
-
-    private Optional<RedSkyProduct> processResponse(Integer responseCode, String responseBody){
         if(responseCode == null || responseBody == null || responseCode == 404){
             return Optional.empty();
         } else if (responseCode != 200){
-            throw new RuntimeException("Failure calling RedSky. Response Code: " + responseCode + " Response Message: " + responseBody);
+            throw new RedSkyServiceException("Failure calling RedSky. Response Code: " + responseCode + " Response Message: " + responseBody);
         }
 
         return Optional.of(RedSkyProductMapper.buildRedSkyProduct(responseBody));
     }
-
-    private Map<String, Object> buildHeaders(Long id){
-        Map<String, Object> headers = new HashMap<>();
-        headers.put(Exchange.HTTP_PATH, basePath + id);
-        headers.put(Exchange.HTTP_QUERY, params);
-
-        return headers;
-    }
 }
-
