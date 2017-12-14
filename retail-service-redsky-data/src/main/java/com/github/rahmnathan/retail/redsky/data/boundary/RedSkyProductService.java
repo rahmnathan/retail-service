@@ -51,6 +51,7 @@ public class RedSkyProductService {
         String responseBody = responseMessage.getBody(String.class);
 
         logger.info("Response for: " + id + " Code: " + responseCode + " Message: " + responseBody);
+        logger.fine("Response for: " + id + " Message: " + responseBody);
 
         if(responseCode == null || responseBody == null || responseCode == 404){
             return Optional.empty();
