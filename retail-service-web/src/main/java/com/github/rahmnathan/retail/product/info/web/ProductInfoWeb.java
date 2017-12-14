@@ -41,8 +41,8 @@ public class ProductInfoWeb {
         }
     }
 
-    @RequestMapping(value = "/products", consumes = "application/json", method = RequestMethod.PUT)
-    public ResponseEntity putProductInfo(@RequestBody ProductPrice productPrice){
+    @RequestMapping(value = "/products/price", consumes = "application/json", method = RequestMethod.PUT)
+    public ResponseEntity putProductPrice(@RequestBody ProductPrice productPrice){
         logger.info("Received request to store ProductInfo: " + productPrice);
 
         try {
