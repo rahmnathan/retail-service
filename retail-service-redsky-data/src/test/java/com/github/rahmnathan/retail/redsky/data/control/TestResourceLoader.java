@@ -2,9 +2,9 @@ package com.github.rahmnathan.retail.redsky.data.control;
 
 import java.io.*;
 
-class TestResourceLoader {
+public class TestResourceLoader {
 
-    static String loadStringFromFile(String path) throws IOException {
+    public static String loadStringFromFile(String path) throws IOException {
         File exampleResponse = new File(path);
         StringBuilder stringBuilder = new StringBuilder();
 
