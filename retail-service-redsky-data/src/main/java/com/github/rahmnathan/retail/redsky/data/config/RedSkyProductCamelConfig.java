@@ -30,9 +30,8 @@ public class RedSkyProductCamelConfig {
                 @Override
                 public void configure() {
                     onException(Exception.class)
-                            .useExponentialBackOff()
                             .redeliveryDelay(500)
-                            .maximumRedeliveries(2)
+                            .maximumRedeliveries(1)
                             .hystrix()
                             .loadBalance()
                             .circuitBreaker(2, 1000, Exception.class);

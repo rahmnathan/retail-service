@@ -2,14 +2,12 @@ package com.github.rahmnathan.retail.price.data.data;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.Currency;
-
 public class ProductPrice {
 
     @Id
-    private Long id;
-    private Double price;
-    private String currencyCode;
+    private final Long id;
+    private final Double price;
+    private final String currencyCode;
 
     public ProductPrice(Long id, Double price, String currencyCode) {
         this.id = id;

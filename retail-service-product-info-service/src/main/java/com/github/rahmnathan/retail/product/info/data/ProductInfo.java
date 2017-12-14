@@ -1,9 +1,9 @@
 package com.github.rahmnathan.retail.product.info.data;
 
 public class ProductInfo {
-    private Long id;
-    private String name;
-    private Price currentPrice;
+    private final Long id;
+    private final String name;
+    private final Price currentPrice;
 
     public ProductInfo(Long id, String name, Price currentPrice) {
         this.id = id;
