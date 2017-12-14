@@ -35,7 +35,6 @@ public class ProductInfoFacade {
             return Optional.ofNullable(productInfoCache.get(id));
         } catch (CompletionException e) {
             logger.log(Level.INFO, "Error loading ProductInfo from cache", e);
-
             throw new ProductInfoServiceException("Error loading ProductInfo from cache", e.getCause());
         }
     }

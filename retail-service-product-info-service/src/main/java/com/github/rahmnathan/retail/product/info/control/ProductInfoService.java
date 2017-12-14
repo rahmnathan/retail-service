@@ -30,20 +30,12 @@ public class ProductInfoService {
             throw new IllegalArgumentException("ProductInfo Id cannot be null");
 
         Optional<ProductPrice> productPriceOptional = productPriceService.getProductPrice(id);
-        if(!productPriceOptional.isPresent()){
+        if(!productPriceOptional.isPresent())
             return Optional.empty();
-        }
 
-        Optional<RedSkyProduct> redSkyProduct;
-        try {
-            redSkyProduct = redSkyProductService.getRedSkyProduct(id);
-        } catch (RedSkyServiceException e){
-            throw new ProductInfoServiceException("Failed to get red sky product", e);
-        }
-
-        if(!redSkyProduct.isPresent()){
+        Optional<RedSkyProduct> redSkyProduct = getRedSkyProduct(id);
+        if(!redSkyProduct.isPresent())
             return Optional.empty();
-        }
 
         ProductPrice productPrice = productPriceOptional.get();
         Price price = new Price(productPrice.getPrice(), productPrice.getCurrencyCode());
@@ -52,5 +44,13 @@ public class ProductInfoService {
 
     public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
         productPriceService.upsertProductPrice(productPrice);
+    }
+
+    private Optional<RedSkyProduct> getRedSkyProduct(Long id) throws ProductInfoServiceException {
+        try {
+            return redSkyProductService.getRedSkyProduct(id);
+        } catch (RedSkyServiceException e){
+            throw new ProductInfoServiceException("Failed to get red sky product", e);
+        }
     }
 }
