@@ -5,14 +5,17 @@ import org.springframework.data.annotation.Id;
 public class ProductPrice {
 
     @Id
-    private final Long id;
-    private final Double price;
-    private final String currencyCode;
+    private Long id;
+    private Double price;
+    private String currencyCode;
 
     public ProductPrice(Long id, Double price, String currencyCode) {
         this.id = id;
         this.price = price;
         this.currencyCode = currencyCode;
+    }
+
+    public ProductPrice() {
     }
 
     public Long getId() {
