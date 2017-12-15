@@ -2,6 +2,7 @@ Spring Boot service that aggregates product information from various sources and
 
 The 'docker build' command has been bound to the maven package goal, so you must have Docker installed to build the
 project as-is. This can be disabled by commenting out the following portion of the retail-service-standalone/pom.xml.
+                
                 <executions>
                     <execution>
                         <id>default</id>
