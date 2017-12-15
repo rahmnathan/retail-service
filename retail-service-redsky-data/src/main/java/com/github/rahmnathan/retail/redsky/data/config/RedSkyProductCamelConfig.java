@@ -40,6 +40,8 @@ public class RedSkyProductCamelConfig {
                             .onWhen(exchange -> exchange.getProperty(Exchange.EXCEPTION_CAUGHT, HttpOperationFailedException.class).getStatusCode() != 404)
                             .end();
 
+                    // TODO - Add Hysterix circuit breaker to avoid overloading downstream service
+
                     from("direct:productinfo")
                             .to("http4://" + productInfoHost)
                             .end();
