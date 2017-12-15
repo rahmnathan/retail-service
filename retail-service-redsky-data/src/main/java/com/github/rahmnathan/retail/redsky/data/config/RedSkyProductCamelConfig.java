@@ -2,6 +2,7 @@ package com.github.rahmnathan.retail.redsky.data.config;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.http.common.HttpOperationFailedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class RedSkyProductCamelConfig {
             camelContext.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() {
-                    onException(Exception.class)
+                    onException(HttpOperationFailedException.class)
                             .redeliveryDelay(500)
                             .maximumRedeliveries(1);
 
