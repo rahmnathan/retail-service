@@ -32,7 +32,7 @@ public class ProductPrice {
         return "ProductPrice{" +
                 "id=" + id +
                 ", price=" + price +
-                ", currencyCode='" + currencyCode.name() + '\'' +
+                ", currencyCode=" + currencyCode +
                 '}';
     }
 }

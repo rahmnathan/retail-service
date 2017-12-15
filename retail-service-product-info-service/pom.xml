@@ -16,13 +16,11 @@
             <groupId>com.github.rahmnathan</groupId>
             <artifactId>retail-service-price-data-api</artifactId>
             <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.rahmnathan</groupId>
             <artifactId>retail-service-redsky-data-api</artifactId>
             <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

@@ -40,14 +40,6 @@ public class ProductPriceService implements IProductPriceService {
         return productPrice != null ? Optional.of(entityToDomainObject(productPrice)) : Optional.empty();
     }
 
-    private void validateParams(ProductPrice productPrice) throws InvalidProductPriceException {
-        if(productPrice == null || productPrice.getId() == null ||
-                productPrice.getPrice() == null || productPrice.getCurrencyCode() == null) {
-
-            throw new InvalidProductPriceException("Invalid ProductPrice: " + productPrice);
-        }
-    }
-
     ProductPrice entityToDomainObject(ProductPriceEntity productPriceEntity){
         return new ProductPrice(productPriceEntity.getId(), productPriceEntity.getPrice(), productPriceEntity.getCurrencyCode());
     }
