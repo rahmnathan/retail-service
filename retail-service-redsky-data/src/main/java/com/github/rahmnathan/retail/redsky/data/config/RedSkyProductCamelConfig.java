@@ -1,6 +1,7 @@
 package com.github.rahmnathan.retail.redsky.data.config;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,12 +31,18 @@ public class RedSkyProductCamelConfig {
             camelContext.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() {
+
                     onException(HttpOperationFailedException.class)
+                            .useExponentialBackOff()
+                            .backOffMultiplier(2)
                             .redeliveryDelay(500)
-                            .maximumRedeliveries(1);
+                            .maximumRedeliveries(2)
+                            .onWhen(exchange -> exchange.getProperty(Exchange.EXCEPTION_CAUGHT, HttpOperationFailedException.class).getStatusCode() != 404)
+                            .end();
 
                     from("direct:productinfo")
-                            .to("http4://" + productInfoHost);
+                            .to("http4://" + productInfoHost)
+                            .end();
                 }
             });
         } catch (Exception e){
