@@ -13,6 +13,6 @@ project as-is. This can be disabled by commenting out the following portion of t
                     </execution>
                 </executions>
                 
-The docker-compose file will pull a MongoDB image and link it to the retail service image for easy deployment. There is
-also a JMeter script in the retail-service-standalone/src/test/jmeter/ directory that allows for easy functional testing
-of deployments.
+The retail-service-standalone/docker-compose.yml file will pull a MongoDB image and link it to the retail service image 
+for easy deployment. There is also a JMeter script in the retail-service-standalone/src/test/jmeter/ directory that allows
+for easy functional testing of deployments.
