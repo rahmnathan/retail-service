@@ -43,7 +43,7 @@ public class ProductInfoService {
     }
 
     public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
-        productPriceService.upsertProductPrice(productPrice);
+        productPriceService.updateOrInsertProductPrice(productPrice);
     }
 
     private Optional<RedSkyProduct> getRedSkyProduct(Long id) throws ProductInfoServiceException {

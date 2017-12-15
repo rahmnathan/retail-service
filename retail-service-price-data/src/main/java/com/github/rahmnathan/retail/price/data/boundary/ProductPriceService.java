@@ -21,7 +21,7 @@ public class ProductPriceService implements IProductPriceService {
         this.productPriceRepository = productPriceRepository;
     }
 
-    public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
+    public void updateOrInsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
         validateParams(productPrice);
 
         if(getProductPrice(productPrice.getId()).isPresent()){

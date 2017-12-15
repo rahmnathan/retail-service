@@ -44,7 +44,7 @@ public class ProductInfoFacade {
         return productInfoService.getProductInfo(id).orElse(null);
     }
 
-    public void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
+    public void updateOrInsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException {
         productInfoService.upsertProductPrice(productPrice);
     }
 }

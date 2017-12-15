@@ -9,7 +9,7 @@ public interface IProductPriceService {
 
         Optional<ProductPrice> getProductPrice(Long id);
 
-        void upsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException;
+        void updateOrInsertProductPrice(ProductPrice productPrice) throws InvalidProductPriceException;
 
         default void validateParams(ProductPrice productPrice) throws InvalidProductPriceException {
                 if (productPrice == null || productPrice.getId() == null ||

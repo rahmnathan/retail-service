@@ -2,7 +2,6 @@ package com.github.rahmnathan.retail.product.info.web;
 
 import com.github.rahmnathan.retail.price.data.data.CurrencyCode;
 import com.github.rahmnathan.retail.price.data.data.ProductPrice;
-import com.github.rahmnathan.retail.price.data.exception.InvalidProductPriceException;
 import com.github.rahmnathan.retail.product.info.boundary.ProductInfoFacade;
 import com.github.rahmnathan.retail.product.info.control.ProductInfoService;
 import com.github.rahmnathan.retail.product.info.data.ProductInfo;
@@ -44,6 +43,6 @@ public class ProductInfoWebTest {
     @Test
     public void upsertValidProductPriceTest(){
         ProductPrice validProductPrice = new ProductPrice(validId, 2.5, CurrencyCode.USD);
-        Assert.assertEquals(200, productInfoWeb.putProductPrice(validProductPrice).getStatusCodeValue());
+        Assert.assertEquals(200, productInfoWeb.updateOrInsertProductPrice(validProductPrice).getStatusCodeValue());
     }
 }

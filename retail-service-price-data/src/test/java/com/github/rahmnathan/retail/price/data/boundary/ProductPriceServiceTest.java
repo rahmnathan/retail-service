@@ -49,11 +49,11 @@ public class ProductPriceServiceTest {
 
     @Test
     public void upsertValidProductPriceTest() throws InvalidProductPriceException {
-        priceService.upsertProductPrice(validProductPrice);
+        priceService.updateOrInsertProductPrice(validProductPrice);
     }
 
     @Test(expected = InvalidProductPriceException.class)
     public void upsertInvalidProductPriceTest() throws InvalidProductPriceException {
-        priceService.upsertProductPrice(invalidProductPrice);
+        priceService.updateOrInsertProductPrice(invalidProductPrice);
     }
 }

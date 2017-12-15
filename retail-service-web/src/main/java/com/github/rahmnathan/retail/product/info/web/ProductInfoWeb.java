@@ -42,11 +42,11 @@ public class ProductInfoWeb {
     }
 
     @RequestMapping(value = "/products/price", consumes = "application/json", method = RequestMethod.PUT)
-    public ResponseEntity putProductPrice(@RequestBody ProductPrice productPrice){
+    public ResponseEntity updateOrInsertProductPrice(@RequestBody ProductPrice productPrice){
         logger.info("Received request to store ProductInfo: " + productPrice);
 
         try {
-            productInfoFacade.upsertProductPrice(productPrice);
+            productInfoFacade.updateOrInsertProductPrice(productPrice);
         } catch (InvalidProductPriceException e){
             logger.log(Level.INFO,"Error storing ProductPrice", e);
             return ResponseEntity.badRequest().body("Invalid product price: " + e.getMessage());
