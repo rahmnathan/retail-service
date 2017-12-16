@@ -51,7 +51,7 @@ public class RedSkyProductService implements IRedSkyProductService {
         Integer responseCode = responseMessage.getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
         String responseBody = responseMessage.getBody(String.class);
 
-        logger.info("Response for: " + id + " Code: " + responseCode + " Message: " + responseBody);
+        logger.info("Response for: " + id + " Code: " + responseCode);
         logger.fine("Response for: " + id + " Message: " + responseBody);
 
         if(responseCode == null || responseBody == null || responseCode == 404){
