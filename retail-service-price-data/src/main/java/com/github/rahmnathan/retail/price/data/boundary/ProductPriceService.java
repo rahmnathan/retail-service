@@ -40,11 +40,11 @@ public class ProductPriceService implements IProductPriceService {
         return productPrice != null ? Optional.of(entityToDomainObject(productPrice)) : Optional.empty();
     }
 
-    ProductPrice entityToDomainObject(ProductPriceEntity productPriceEntity){
+    private ProductPrice entityToDomainObject(ProductPriceEntity productPriceEntity){
         return new ProductPrice(productPriceEntity.getId(), productPriceEntity.getPrice(), productPriceEntity.getCurrencyCode());
     }
 
-    ProductPriceEntity domainObjectToEntity(ProductPrice productPrice){
+    private ProductPriceEntity domainObjectToEntity(ProductPrice productPrice){
         return new ProductPriceEntity(productPrice.getId(), productPrice.getPrice(), productPrice.getCurrencyCode());
     }
 }
